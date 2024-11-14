@@ -3,13 +3,14 @@
 //
 #include "stdlib.h"
 #include <stdio.h>
-
+#include "moves.h"
 #ifndef UNTITLED1_NODES_H
 #define UNTITLED1_NODES_H
 
 
 typedef struct s_node {
     int value;
+    t_move move;
     int depth;
     struct s_node **sons; // Tableau de pointeurs pour les enfants
     int nbSons; // Taille physique du tableau des enfants
@@ -20,7 +21,7 @@ typedef struct s_node {
  * @param value of the node; nbSons physical size of the child array ; deth node depth
  * @return newNode
  */
- t_node *createNode(int value, int nbSons, int depth);
+ t_node *createNode(int value, int nbSons;
 
 
 
