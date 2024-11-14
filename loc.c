@@ -51,9 +51,11 @@ t_position DOWN(t_position pos)
 }
 
 
-t_position SPAWN(t_position pos, int x_max, int y_max){
+t_localisation SPAWN(t_localisation localisation, int x_max, int y_max){
     srand(time(NULL));
-    pos.x= rand() % x_max+1;
-    pos.y= rand() % y_max+1;
-    return pos;
+   localisation.pos.x= rand() % (x_max+1);
+   localisation.pos.y= rand() % (y_max+1);
+   localisation.ori = rand() % 4;
+
+    return localisation;
 }
