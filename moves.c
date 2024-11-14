@@ -3,6 +3,7 @@
 //
 
 #include "moves.h"
+#include <stdlib.h>
 
 /* prototypes of local functions */
 /* local functions are used only in this file, as helper functions */
@@ -138,6 +139,35 @@ t_localisation translate(t_localisation loc, t_move move)
 char *getMoveAsString(t_move move)
 {
     return _moves[move];
+}
+
+int remainingMoveNumber(t_move move){
+    return moves_count[move];
+}
+
+void decrementMoveNumber(t_move move){
+    moves_count[move] -= 1;
+}
+
+t_move intToMove(int index){
+    switch(index){
+        case 0:
+            return F_10;
+        case 1:
+            return F_20;
+        case 2:
+            return F_30;
+        case 3:
+            return B_10;
+        case 4:
+            return T_LEFT;
+        case 5:
+            return T_RIGHT;
+        case 6:
+            return U_TURN;
+        default:
+            return 0;
+    }
 }
 
 t_localisation move(t_localisation loc, t_move move)

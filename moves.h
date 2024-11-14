@@ -11,7 +11,7 @@
  * @brief Array of strings for the possible moves of the robot
  */
 static char _moves[8][8] = {"F 10m", "F 20m", "F 30m", "B 10m", "T left", "T right", "U-turn"};
-
+static int moves_count[8] = {22, 15, 7, 7, 21, 21, 7};
 /**
  * @brief Enum for the possible moves of the robot
  */
@@ -49,5 +49,9 @@ t_localisation move(t_localisation, t_move);
  * @return none
  */
 void updateLocalisation(t_localisation *, t_move);
+
+int remainingMoveNumber(t_move);
+void decrementMoveNumber(t_move);
+t_move intToMove(int);
 
 #endif //UNTITLED1_MOVES_H
