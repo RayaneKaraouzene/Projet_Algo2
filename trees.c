@@ -4,7 +4,7 @@
 
 
 #include "trees.h"
-
+#include "map.h"
 t_tree createTree()
 {
 
@@ -14,4 +14,12 @@ t_tree createTree()
 
 }
 
+
+t_tree createPhase(t_position spawncoords,t_map map)
+{
+    spawn_x = spawncoords.x;
+    spawn_y = spawncoords.y;
+
+
+}
 
