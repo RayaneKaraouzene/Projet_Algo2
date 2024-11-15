@@ -88,7 +88,7 @@ t_position DOWN(t_position);
  * @param pos : the position
  * @return the spawn position
  */
-t_position SPAWN(t_position pos, int x_max, int y_max);
+t_localisation SPAWN(int x_max, int y_max);
 
 
 

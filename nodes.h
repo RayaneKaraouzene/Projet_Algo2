@@ -21,7 +21,7 @@ typedef struct s_node {
  * @param value of the node; nbSons physical size of the child array ; deth node depth
  * @return newNode
  */
- t_node *createNode(int value, int nbSons;
+t_node *createNode(int value, int nbSons);
 
 
 
