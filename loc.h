@@ -1,7 +1,9 @@
 //
 // Created by flasque on 19/10/2024.
 //
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #ifndef UNTITLED1_LOC_H
 #define UNTITLED1_LOC_H
 
@@ -79,5 +81,15 @@ t_position UP(t_position);
  * @return the DOWN position
  */
 t_position DOWN(t_position);
+
+
+/**
+ * @brief Create a random spawn location in the map
+ * @param pos : the position
+ * @return the spawn position
+ */
+t_localisation SPAWN(int x_max, int y_max);
+
+
 
 #endif //UNTITLED1_LOC_H

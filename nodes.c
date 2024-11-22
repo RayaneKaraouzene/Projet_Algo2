@@ -6,12 +6,12 @@
 
 
 
-t_node *createNode(int value, int nbSons, int depth) {
+t_node *createNode(int value, int nbSons) {
     t_node *newNode = (t_node*)malloc(sizeof(t_node));
 
     newNode->value = value;
-    newNode->depth = depth;
     newNode->nbSons = nbSons;
+
 
     newNode->sons = (t_node**)malloc(nbSons * sizeof(t_node*));
 
