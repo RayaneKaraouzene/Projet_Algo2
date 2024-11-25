@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "map.h"
-
+#include "loc.h"
+#include "trees.h"
+#include "moves.h"
 int main() {
     t_map map;
 
@@ -32,10 +34,34 @@ int main() {
         printf("\n");
     }
     displayMap(map);
+
+
+
+
+    t_move* moves = random_moves(9);
+    for(int i = 0; i < 9; i++){
+        t_move move = moves[i];
+        printf("%s ", getMoveAsString(move));
+        printf("%d ", remainingMoveNumber(move));
+    }
+    printf("\n");
+
+    t_localisation spawn = SPAWN(6,7);
+    printf("spawn point is y:%d x:%d\n",spawn.pos.y,spawn.pos.x);
+    int border[2];
+    border[0] = 6;
+    border[1] = 7;
+    t_tree tree = createTree();
+    int mapval = map.costs[spawn.pos.y][spawn.pos.x];
+    tree.root = createNode(mapval,4);
+    createPhase(4,map,spawn,moves,9,*(tree.root),0,border);
+    printTree(tree.root,4);
+
     return 0;
 }
 
-//test
+
+
 
 
 

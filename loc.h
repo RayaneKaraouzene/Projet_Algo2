@@ -1,9 +1,13 @@
 //
 // Created by flasque on 19/10/2024.
 //
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #ifndef UNTITLED1_LOC_H
 #define UNTITLED1_LOC_H
+
+static char _ori[4][8]={"NORTH","EAST","SOUTH","WEST"};
 
 /**
  * @brief Enum for the orientation of the robot (NORTH, EAST, SOUTH, WEST)
@@ -15,7 +19,6 @@ typedef enum e_orientation
     SOUTH,
     WEST
 } t_orientation;
-
 /**
  * @brief Structure for the position of the robot
  */
@@ -79,5 +82,15 @@ t_position UP(t_position);
  * @return the DOWN position
  */
 t_position DOWN(t_position);
+
+
+/**
+ * @brief Create a random spawn location in the map
+ * @param pos : the position
+ * @return the spawn position
+ */
+t_localisation SPAWN(int x_max, int y_max);
+char *getOriAsString(int ori);
+
 
 #endif //UNTITLED1_LOC_H

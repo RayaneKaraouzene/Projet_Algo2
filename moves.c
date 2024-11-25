@@ -53,6 +53,7 @@ t_localisation translate(t_localisation loc, t_move move)
      *  - the origin (x=0, y=0) is at the top left corner
      */
     t_position res = loc.pos;
+    int rst;
     switch (move) {
         case F_10:
             switch (loc.ori) {
@@ -126,6 +127,15 @@ t_localisation translate(t_localisation loc, t_move move)
                     break;
             }
             break;
+        case T_LEFT:
+            loc.ori=(loc.ori+3)%4;
+            break;
+        case T_RIGHT:
+            loc.ori=(loc.ori+1)%4;
+            break;
+        case U_TURN:
+            loc.ori=(loc.ori+2)%4;
+            break;
         default:
             break;
     }
@@ -135,7 +145,7 @@ t_localisation translate(t_localisation loc, t_move move)
 
 /* definitions of exported functions */
 
-char *getMoveAsString(t_move move)
+char *getMoveAsString(int move)
 {
     return _moves[move];
 }
@@ -152,4 +162,49 @@ void updateLocalisation(t_localisation *p_loc, t_move m)
 {
     *p_loc = move(*p_loc, m);
     return;
+}
+
+
+
+int remainingMoveNumber(t_move move){
+    return moves_count[move];
+}
+
+void decrementMoveNumber(t_move move){
+    moves_count[move] -= 1;
+}
+
+t_move intToMove(int index){
+    switch(index){
+        case 0:
+            return F_10;
+        case 1:
+            return F_20;
+        case 2:
+            return F_30;
+        case 3:
+            return B_10;
+        case 4:
+            return T_LEFT;
+        case 5:
+            return T_RIGHT;
+        case 6:
+            return U_TURN;
+        default:
+            return 0;
+    }
+}
+
+t_move* random_moves(int n){
+    t_move* moves = (t_move*) malloc(sizeof(t_move) * n);
+    srand(time(NULL));
+    for(int i = 0; i < n; i++){
+        int min = 0;
+        int max = 6;
+        int rand_index = rand() % (max - min + 1) + min;
+        t_move next_move = intToMove(rand_index);
+        decrementMoveNumber(next_move);
+        *(moves+i) = next_move;
+    }
+    return moves;
 }

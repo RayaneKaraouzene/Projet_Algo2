@@ -13,4 +13,8 @@ add_executable(project_executable main.c
         queue.c
         queue.h
         stack.c
-        stack.h)
+        stack.h
+        nodes.c
+        nodes.h
+        trees.h
+        trees.c)

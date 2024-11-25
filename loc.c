@@ -42,11 +42,24 @@ t_position UP(t_position pos)
     return new_pos;
 }
 
-t_position DOWN(t_position pos)
-{
+t_position DOWN(t_position pos) {
     t_position new_pos;
     new_pos.x = pos.x;
     new_pos.y = pos.y + 1;
     return new_pos;
 }
 
+t_localisation SPAWN(int x_max, int y_max){
+    srand(time(NULL));
+    t_localisation localisation;
+    localisation.pos.x= rand() % (x_max);
+    localisation.pos.y= rand() % (y_max);
+    localisation.ori = rand() % 4;
+
+    return localisation;
+}
+
+char *getOriAsString(int ori)
+{
+    return _ori[ori];
+}
