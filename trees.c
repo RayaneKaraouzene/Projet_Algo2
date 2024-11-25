@@ -169,7 +169,7 @@ void createPhase(int tries,t_map map,t_localisation loc,t_move movelist[],int mo
     for (int i = 0; i < NUM_MOVES; ++i) {
         if((usedmove >>i)&1) continue;
         if (root.value>10000) return;
-
+        if (root.value==0)return;
         t_localisation newloc;
         newloc.pos.x = loc.pos.x;
         newloc.pos.y = loc.pos.y;
