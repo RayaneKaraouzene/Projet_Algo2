@@ -11,8 +11,7 @@ t_node *createNode(int value, int nbSons) {
 
     newNode->value = value;
     newNode->nbSons = nbSons;
-
-
+    newNode->move=-1;
     newNode->sons = (t_node**)malloc(nbSons * sizeof(t_node*));
 
     for (int i = 0; i < nbSons; i++) {

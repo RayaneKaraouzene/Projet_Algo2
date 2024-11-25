@@ -7,6 +7,8 @@
 #ifndef UNTITLED1_LOC_H
 #define UNTITLED1_LOC_H
 
+
+
 /**
  * @brief Enum for the orientation of the robot (NORTH, EAST, SOUTH, WEST)
  */
@@ -17,7 +19,6 @@ typedef enum e_orientation
     SOUTH,
     WEST
 } t_orientation;
-
 /**
  * @brief Structure for the position of the robot
  */

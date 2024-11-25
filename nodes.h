@@ -14,6 +14,7 @@ typedef struct s_node {
     int depth;
     struct s_node **sons; // Tableau de pointeurs pour les enfants
     int nbSons; // Taille physique du tableau des enfants
+    t_orientation orientation;
 } t_node;
 
 /**

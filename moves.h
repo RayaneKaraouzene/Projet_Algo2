@@ -32,7 +32,7 @@ typedef enum e_move
  * @param move : the move to convert
  * @return the string corresponding to the move
  */
-char *getMoveAsString(t_move move);
+char *getMoveAsString(int move);
 
 /**
  * @brief function to update the localisation of the robot according to a move

@@ -181,6 +181,7 @@ void createPhase(int tries,t_map map,t_localisation loc,t_move movelist[],int mo
         {
             int mapval = map.costs[newloc.pos.y][newloc.pos.x];
             t_node *newnode = createNode(mapval,movelist_size);
+            newnode->orientation=newloc.ori;
             newnode->move = movelist[i];
 
             root.sons[i] = newnode;
@@ -191,7 +192,7 @@ void createPhase(int tries,t_map map,t_localisation loc,t_move movelist[],int mo
     }
 }
 
-void printTree(t_node *root, int depth) {
+void printTree1(t_node *root, int depth) {
     if (!root) {
         return; // Base case: if the node is NULL, return
     }
@@ -212,3 +213,26 @@ void printTree(t_node *root, int depth) {
         }
     }
 }
+
+void printTree(t_node *root, int depth) {
+    if (!root) {
+        return; // Si le nœud est NULL, on sort
+    }
+
+    // Affichage du préfixe (indentation et branche selon la profondeur)
+    for (int i = 0; i < depth - 1; i++) {
+        printf("|   "); // Branche verticale pour les niveaux supérieurs
+    }
+    if (depth > 0) {
+        printf("+--- "); // Branche finale pour le nœud actuel
+    }
+
+    // Afficher le contenu du nœud
+    printf("Node Value: %d | Move used: %s | orientation:%s\n", root->value, getMoveAsString(root->move)), root->orientation;
+
+    // Appel récursif pour chaque fils
+    for (int i = 0; i < root->nbSons; i++) {
+        printTree(root->sons[i], depth + 1);
+    }
+}
+
