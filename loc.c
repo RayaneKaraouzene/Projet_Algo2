@@ -59,7 +59,7 @@ t_localisation SPAWN(int x_max, int y_max){
     return localisation;
 }
 
-char *getOriAsString(int move)
+char *getOriAsString(int ori)
 {
-    return [move];
+    return _ori[ori];
 }

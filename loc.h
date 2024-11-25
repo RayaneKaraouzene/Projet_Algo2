@@ -7,7 +7,7 @@
 #ifndef UNTITLED1_LOC_H
 #define UNTITLED1_LOC_H
 
-
+static char _ori[4][8]={"NORTH","EAST","SOUTH","WEST"};
 
 /**
  * @brief Enum for the orientation of the robot (NORTH, EAST, SOUTH, WEST)
@@ -90,7 +90,7 @@ t_position DOWN(t_position);
  * @return the spawn position
  */
 t_localisation SPAWN(int x_max, int y_max);
-
+char *getOriAsString(int ori);
 
 
 #endif //UNTITLED1_LOC_H

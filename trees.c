@@ -168,6 +168,7 @@ void createPhase(int tries,t_map map,t_localisation loc,t_move movelist[],int mo
 
     for (int i = 0; i < NUM_MOVES; ++i) {
         if((usedmove >>i)&1) continue;
+        if (root.value>10000) return;
 
         t_localisation newloc;
         newloc.pos.x = loc.pos.x;
@@ -175,19 +176,31 @@ void createPhase(int tries,t_map map,t_localisation loc,t_move movelist[],int mo
         newloc.ori = loc.ori;
 
         newloc = translate(newloc,movelist[i]);
-
+        int mapval;
         if(newloc.pos.x>=0 && newloc.pos.x<border[0] && newloc.pos.y>=0
-        && newloc.pos.y<border[1] )
+        && newloc.pos.y<border[1])
         {
-            int mapval = map.costs[newloc.pos.y][newloc.pos.x];
-            t_node *newnode = createNode(mapval,movelist_size);
-            newnode->orientation=newloc.ori;
-            newnode->move = movelist[i];
 
-            root.sons[i] = newnode;
+             mapval = map.costs[newloc.pos.y][newloc.pos.x];
 
+        }
+        else
+        {
+             mapval = 20000;
+
+
+        }
+        t_node *newnode = createNode(mapval,movelist_size);
+        newnode->move = movelist[i];
+        newnode->orientation = newloc.ori;
+        root.sons[i] = newnode;
+
+        if(root.value<10000)
+        {
             createPhase(tries-1,map,newloc,movelist,movelist_size-1,*newnode,usedmove | (1 << i),border);
         }
+
+
 
     }
 }
@@ -228,7 +241,8 @@ void printTree(t_node *root, int depth) {
     }
 
     // Afficher le contenu du nœud
-    printf("Node Value: %d | Move used: %s | orientation:%s\n", root->value, getMoveAsString(root->move)), root->orientation;
+    printf("Node Value: %d | Move used: %s | orientation: %s\n", root->value, getMoveAsString(root->move),
+           getOriAsString(root->orientation));
 
     // Appel récursif pour chaque fils
     for (int i = 0; i < root->nbSons; i++) {

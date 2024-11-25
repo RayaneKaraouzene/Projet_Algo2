@@ -44,7 +44,7 @@ int main() {
     int mapval = map.costs[spawn.pos.y][spawn.pos.x];
     tree.root = createNode(mapval,4);
     printf("Root val : %d\n",tree.root->value);
-    t_move movelist[4] = {F_10,F_20,B_10,T_LEFT};
+    t_move movelist[4] = {F_10,F_20,F_10,F_10};
     createPhase(4,map,spawn,movelist,8,*(tree.root),0,border);
     printTree(tree.root,4);
 
