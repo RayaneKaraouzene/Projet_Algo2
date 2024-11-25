@@ -6,7 +6,7 @@
 #include "trees.h"
 #include "map.h"
 #include "moves.h"
-
+#include "nodes.h"
 #define NUM_MOVES 4
 t_tree createTree()
 {
