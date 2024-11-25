@@ -163,3 +163,48 @@ void updateLocalisation(t_localisation *p_loc, t_move m)
     *p_loc = move(*p_loc, m);
     return;
 }
+
+
+
+int remainingMoveNumber(t_move move){
+    return moves_count[move];
+}
+
+void decrementMoveNumber(t_move move){
+    moves_count[move] -= 1;
+}
+
+t_move intToMove(int index){
+    switch(index){
+        case 0:
+            return F_10;
+        case 1:
+            return F_20;
+        case 2:
+            return F_30;
+        case 3:
+            return B_10;
+        case 4:
+            return T_LEFT;
+        case 5:
+            return T_RIGHT;
+        case 6:
+            return U_TURN;
+        default:
+            return 0;
+    }
+}
+
+t_move* random_moves(int n){
+    t_move* moves = (t_move*) malloc(sizeof(t_move) * n);
+    srand(time(NULL));
+    for(int i = 0; i < n; i++){
+        int min = 0;
+        int max = 6;
+        int rand_index = rand() % (max - min + 1) + min;
+        t_move next_move = intToMove(rand_index);
+        decrementMoveNumber(next_move);
+        *(moves+i) = next_move;
+    }
+    return moves;
+}
