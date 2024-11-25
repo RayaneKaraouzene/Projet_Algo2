@@ -57,6 +57,7 @@ int main() {
     createPhase(4,map,spawn,moves,9,*(tree.root),0,border);
     printTree(tree.root,4);
 
+
     return 0;
 }
 
