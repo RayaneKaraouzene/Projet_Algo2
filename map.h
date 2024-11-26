@@ -15,7 +15,8 @@ typedef enum e_soil
     PLAIN,
     ERG,
     REG,
-    CREVASSE
+    CREVASSE,
+    ROVER
 } t_soil;
 
 /**

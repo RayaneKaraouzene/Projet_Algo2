@@ -289,6 +289,9 @@ void displayMap(t_map map)
                     case CREVASSE:
                         sprintf(c, "%c%c%c",219,219,219);
                         break;
+                    case ROVER:
+                        sprintf(c, "RRR");
+                        break;
                     default:
                         strcpy(c, "???");
                         break;

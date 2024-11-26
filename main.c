@@ -47,6 +47,9 @@ int main() {
     printf("\n");
 
     t_localisation spawn = SPAWN(6,7);
+    map.soils[spawn.pos.y][spawn.pos.x] = ROVER;
+    displayMap(map);
+
     printf("spawn point is y:%d x:%d\n",spawn.pos.y,spawn.pos.x);
     int border[2];
     border[0] = 6;
