@@ -55,9 +55,14 @@ int main() {
     int num_moves = 5;
 
     int running = 1;
+    spawn.pos.y = 1;
+    spawn.pos.x = 1;
+    spawn.ori = 'EAST';
 
     do
     {
+
+
         t_move* moves = random_moves(num_moves);
         for(int i = 0; i < 9; i++){
             t_move move = moves[i];
@@ -65,7 +70,6 @@ int main() {
             printf("%d ", remainingMoveNumber(move));
         }
         printf("\n");
-
 
         int usedmoveindices[num_moves];
         for(int i=0;i<num_moves;i++)
@@ -123,6 +127,7 @@ int main() {
         spawn.pos.y = old_y;
         spawn.ori = old_ori;
         printf("%d %d %s\n",spawn.pos.x,spawn.pos.y,getOriAsString(spawn.ori));
+
 
     }while(running !=0 );
 
