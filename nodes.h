@@ -25,6 +25,8 @@ typedef struct s_node {
 t_node *createNode(int value, int nbSons);
 t_node *createNode1(int value, int nbSons,t_move move);
 
+int isleafnode(t_node *root);
+
 
 
 #endif //UNTITLED1_NODES_H
