@@ -162,12 +162,12 @@ t_localisation translatee(t_localisation loc, t_move move)
 
 }*/
 
-void createPhase(int tries,t_map map,t_localisation loc,t_move movelist[],int movelist_size,t_node root,int usedmove,int border[])
+void createPhase(int tries,t_map map,t_localisation loc,t_move *movelist,int movelist_size,t_node root,int usedmove,int border[])
 {
     if (tries == 0) return;
 
     for (int i = 0; i < NUM_MOVES; ++i) {
-        if((usedmove >>i)&1) continue;
+        if(i==usedmove) continue;
         if (root.value>10000) return;
         if (root.value==0)return;
         t_localisation newloc;
@@ -187,21 +187,15 @@ void createPhase(int tries,t_map map,t_localisation loc,t_move movelist[],int mo
         else
         {
              mapval = 20000;
-
-
         }
+
         t_node *newnode = createNode(mapval,movelist_size);
         newnode->move = movelist[i];
         newnode->orientation = newloc.ori;
         root.sons[i] = newnode;
 
-        if(root.value<10000)
-        {
-            createPhase(tries-1,map,newloc,movelist,movelist_size-1,*newnode,usedmove | (1 << i),border);
-        }
 
-
-
+            createPhase(tries-1,map,newloc,movelist,movelist_size-1,*newnode,i,border);
     }
 }
 
@@ -217,7 +211,8 @@ void printTree1(t_node *root, int depth) {
 
 
     // Print the value of the current node
-    printf("└── Node Value: %d |Move used: %d\n", root->value,root->move);
+    printf("└── Node Value: %d | Move used: %s | orientation: %s | nbsons: %d\n", root->value, getMoveAsString(root->move),
+           getOriAsString(root->orientation),root->nbSons);
 
     // Recur for each child node
     for (int i = 0; i < root->nbSons; i++) {
@@ -241,12 +236,8 @@ void printTree(t_node *root, int depth) {
     }
 
     // Afficher le contenu du nœud
-    printf("Node Value: %d | Move used: %s | orientation: %s\n", root->value, getMoveAsString(root->move),
-           getOriAsString(root->orientation));
+    printf("Node Value: %d | Move used: %s | orientation: %s | nbsons: %d\n", root->value, getMoveAsString(root->move),
+           getOriAsString(root->orientation),root->nbSons);
 
     // Appel récursif pour chaque fils
-    for (int i = 0; i < root->nbSons; i++) {
-        printTree(root->sons[i], depth + 1);
-    }
-}
-
+    for (int i = 0; i < root->nbSons; i+
