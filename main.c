@@ -51,19 +51,14 @@ int main() {
     int border[2];
     border[0] = 6;
     border[1] = 7;
+
+
+    int num_moves = 4;
+    int usedmoveindices[num_moves];
+    for(int i=0;i<num_moves;i++)
+    {
+        usedmoveindices[i]=0;
+    }
+
     t_tree tree = createTree();
-    int mapval = map.costs[spawn.pos.y][spawn.pos.x];
-    tree.root = createNode(mapval,4);
-    createPhase(4,map,spawn,moves,9,*(tree.root),0,border);
-    printTree(tree.root,4);
-
-    return 0;
-}
-
-
-
-
-
-
-
-
+    tree.root = createphase1(3,map,spawn,moves,num_moves,border,used
