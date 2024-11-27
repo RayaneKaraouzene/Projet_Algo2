@@ -46,7 +46,6 @@ t_localisation translate(t_localisation loc, t_move move,t_map map)
      *  - the origin (x=0, y=0) is at the top left corner
      */
     t_position res = loc.pos;
-    int rst;
     switch (map.soils[loc.pos.y][loc.pos.x]) {
         case ERG:
             switch (move)

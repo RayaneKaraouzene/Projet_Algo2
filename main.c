@@ -64,7 +64,7 @@ int main() {
 
 
         t_move* moves = random_moves(num_moves);
-        for(int i = 0; i < 9; i++){
+        for(int i = 0; i < num_moves; i++){
             t_move move = moves[i];
             printf("%s ", getMoveAsString(move));
             printf("%d ", remainingMoveNumber(move));
