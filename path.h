@@ -16,6 +16,7 @@ typedef struct
     int totalcost;
     t_move* movesequence;
     int movecount;
+    t_node *bestnode;
 }t_path;
 
 t_path findbestpath(t_node *root,int currentcost,t_move* currentsequence,int movecount);

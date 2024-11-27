@@ -30,6 +30,7 @@ t_path findbestpath(t_node *root,int currentcost,t_move* currentsequence,int mov
             result.minval = root->value;
             result.totalcost = currentcost;
             result.movecount = movecount+1;
+            result.bestnode = root;
         }
     }
 

@@ -147,6 +147,7 @@ t_localisation translate(t_localisation loc, t_move move)
 
 char *getMoveAsString(int move)
 {
+    if(move==-1) return "START";
     return _moves[move];
 }
 

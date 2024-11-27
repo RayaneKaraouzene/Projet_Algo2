@@ -54,7 +54,7 @@ int main() {
     border[1] = 7;
 
 
-    int num_moves = 5;
+    int num_moves = 9;
     int usedmoveindices[num_moves];
     for(int i=0;i<num_moves;i++)
     {
@@ -66,7 +66,7 @@ int main() {
     tree.root->orientation = spawn.ori;
     createPhase2(3,map,spawn,moves,num_moves,*(tree.root),usedmoveindices,border);*/
 
-    tree.root = createphase4(map,spawn,0,3,moves,num_moves,usedmoveindices,border);
+    tree.root = createphase4(map,spawn,0,5,moves,num_moves,usedmoveindices,border);
     printTree(tree.root,4);
 
     printf("done tree\n");
