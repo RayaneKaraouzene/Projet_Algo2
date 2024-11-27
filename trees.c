@@ -166,8 +166,10 @@ void createPhase(int tries,t_map map,t_localisation loc,t_move *movelist,int mov
 {
     if (tries == 0) return;
 
+
     for (int i = 0; i < NUM_MOVES; ++i) {
-        if(i==usedmove) continue;
+        t_move *tmp = movelist;
+        if((usedmove>>i)&1)continue;
         if (root.value>10000) return;
         if (root.value==0)return;
         t_localisation newloc;
@@ -175,7 +177,7 @@ void createPhase(int tries,t_map map,t_localisation loc,t_move *movelist,int mov
         newloc.pos.y = loc.pos.y;
         newloc.ori = loc.ori;
 
-        newloc = translate(newloc,movelist[i]);
+        newloc = translate(newloc,tmp[i]);
         int mapval;
         if(newloc.pos.x>=0 && newloc.pos.x<border[0] && newloc.pos.y>=0
         && newloc.pos.y<border[1])
@@ -194,8 +196,7 @@ void createPhase(int tries,t_map map,t_localisation loc,t_move *movelist,int mov
         newnode->orientation = newloc.ori;
         root.sons[i] = newnode;
 
-
-            createPhase(tries-1,map,newloc,movelist,movelist_size-1,*newnode,i,border);
+            createPhase(tries-1,map,newloc,tmp,movelist_size-1,*newnode,usedmove | (1<<i),border);
     }
 }
 
@@ -240,4 +241,3 @@ void printTree(t_node *root, int depth) {
            getOriAsString(root->orientation),root->nbSons);
 
     // Appel récursif pour chaque fils
-    for (int i = 0; i < root->nbSons; i+

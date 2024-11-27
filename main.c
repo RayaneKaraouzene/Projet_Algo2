@@ -54,12 +54,13 @@ int main() {
     t_tree tree = createTree();
     int mapval = map.costs[spawn.pos.y][spawn.pos.x];
     tree.root = createNode(mapval,4);
-    createPhase(3,map,spawn,moves,4,*(tree.root),-1,border);
+    createPhase(3,map,spawn,moves,4,*(tree.root),0,border);
     printTree(tree.root,4);
 
 
     return 0;
 }
+
 
 
 
