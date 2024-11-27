@@ -18,7 +18,103 @@ t_tree createTree()
 }
 
 
+t_localisation translatee(t_localisation loc, t_move move)
+{
+    /** rules for coordinates:
+     *  - x grows to the right with step of +1
+     *  - y grows to the bottom with step of +1
+     *  - the origin (x=0, y=0) is at the top left corner
+     */
+    t_position res = loc.pos;
+    int rst;
+    switch (move) {
+        case F_10:
+            switch (loc.ori) {
+                case NORTH:
+                    res.y = loc.pos.y - 1;
+                    break;
+                case EAST:
+                    res.x = loc.pos.x + 1;
+                    break;
+                case SOUTH:
+                    res.y = loc.pos.y + 1;
+                    break;
+                case WEST:
+                    res.x = loc.pos.x - 1;
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case F_20:
+            switch (loc.ori) {
+                case NORTH:
+                    res.y = loc.pos.y - 2;
+                    break;
+                case EAST:
+                    res.x = loc.pos.x + 2;
+                    break;
+                case SOUTH:
+                    res.y = loc.pos.y + 2;
+                    break;
+                case WEST:
+                    res.x = loc.pos.x - 2;
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case F_30:
+            switch (loc.ori) {
+                case NORTH:
+                    res.y = loc.pos.y - 3;
+                    break;
+                case EAST:
+                    res.x = loc.pos.x + 3;
+                    break;
+                case SOUTH:
+                    res.y = loc.pos.y + 3;
+                    break;
+                case WEST:
+                    res.x = loc.pos.x - 3;
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case B_10:
+            switch (loc.ori) {
+                case NORTH:
+                    res.y = loc.pos.y + 1;
+                    break;
+                case EAST:
+                    res.x = loc.pos.x - 1;
+                    break;
+                case SOUTH:
+                    res.y = loc.pos.y - 1;
+                    break;
+                case WEST:
+                    res.x = loc.pos.x + 1;
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case T_LEFT:
+            loc.ori=(loc.ori+3)%4;
+            break;
+        case T_RIGHT:
+            loc.ori=(loc.ori+1)%4;
+            break;
+        case U_TURN:
+            loc.ori=(loc.ori+2)%4;
+            break;
+        default:
+            break;
+    }
+    return loc_init(res.x, res.y, loc.ori);
 
+}
 
 
 
@@ -30,11 +126,6 @@ t_node* createphase4(t_map map,t_localisation loc,int depth,int maxdepth,t_move 
 
 
     t_node *root = createNode(map.costs[loc.pos.y][loc.pos.x],movescount-depth);
-    if(!root)
-    {
-        fprintf(stderr,"Error failed to allocate memory");
-        return NULL;
-    }
 
     if(root->value>=10000)
     {
@@ -45,12 +136,14 @@ t_node* createphase4(t_map map,t_localisation loc,int depth,int maxdepth,t_move 
     int nbsons = 0;
 
     for (int i = 0; i < movescount; ++i) {
-
         if(usedmoves[i])
         {
             continue;
         }
-        t_localisation newloc = loc_init(loc.pos.x,loc.pos.y,loc.ori);
+        t_localisation newloc;
+        newloc.pos.x = loc.pos.x;
+        newloc.pos.y = loc.pos.y;
+        newloc.ori = loc.ori;
         newloc = translate(newloc,movelist[i],map);
 
         int childvalue;
@@ -69,21 +162,12 @@ t_node* createphase4(t_map map,t_localisation loc,int depth,int maxdepth,t_move 
         newusedmoves[i]=1;
 
         t_node *child = createNode(childvalue,movescount-depth-1);
-        if (!child) {
-            fprintf(stderr, "Error: Failed to allocate memory for child Node.\n");
-            continue; // Skip this child if memory allocation fails
-        }
         child->move = movelist[i];
         child->orientation = newloc.ori;
 
         if(child->value>=10000)child->nbSons = 0;
         else{
             child->sons = (t_node**)malloc((movescount-depth-1) * sizeof(t_node*));
-            if (!child->sons) {
-                fprintf(stderr, "Error: Failed to allocate memory for child->children.\n");
-                free(child); // Free child to avoid memory leak
-                continue;
-            }
             t_node* subtree = createphase4(map,newloc,depth+1,maxdepth,movelist,movescount,newusedmoves,border);
             if(subtree)
             {
@@ -93,7 +177,6 @@ t_node* createphase4(t_map map,t_localisation loc,int depth,int maxdepth,t_move 
                 child->nbSons=subtree->nbSons;
             }
         }
-
 
         root->sons[nbsons++]=child;
 
@@ -147,20 +230,5 @@ void printTree(t_node *root, int depth) {
     }
 }
 
-
-void freetree(t_node* node)
-{
-    if(node == NULL)
-    {
-        return;
-    }
-
-    for (int i = 0; i < node->nbSons; ++i) {
-        if(node->sons[i]==NULL)continue;
-        freetree(node->sons[i]);
-    }
-    free(node->sons);
-    free(node);
-}
 
 
