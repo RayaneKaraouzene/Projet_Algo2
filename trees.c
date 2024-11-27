@@ -260,52 +260,67 @@ t_node* createphase1(int tries,t_map map,t_localisation loc,t_move movelist[],in
     return newnode;
 }
 
-void createPhase2(int tries,t_map map,t_localisation loc,t_move movelist[],int movelist_size,t_node root,int usedmove,int border[])
+void createPhase2(int tries,t_map map,t_localisation loc,t_move movelist[],int movelist_size,t_node root,int *usedmove,int border[])
 {
     if (tries == 0) return;
 
-    int nbsons;
+    int nbsons = 0;
     for (int i = 0; i < movelist_size; ++i) {
+        if(!usedmove[i])
+        {
+            t_localisation newloc;
+            newloc.pos.x = loc.pos.x;
+            newloc.pos.y = loc.pos.y;
+            newloc.ori = loc.ori;
+            newloc = translate(newloc,movelist[i]);
 
+
+            if(newloc.pos.x>=0 && newloc.pos.x<border[0] && newloc.pos.y>=0
+               && newloc.pos.y<border[1])
+            {
+
+                nbsons++;
+                if (map.costs[newloc.pos.y][newloc.pos.x]>=10000 || map.costs[newloc.pos.y][newloc.pos.x]==0) nbsons = 0;
+            }
+
+        }
     }
 
+
+
     for (int i = 0; i < movelist_size; ++i) {
-        if((usedmove >>i)&1) continue;
-        if (root.value>10000) return;
-        if (root.value==0)return;
-        t_localisation newloc;
-        newloc.pos.x = loc.pos.x;
-        newloc.pos.y = loc.pos.y;
-        newloc.ori = loc.ori;
+        if(!usedmove[i]) {
 
-        newloc = translate(newloc,movelist[i]);
-        int mapval;
+            t_localisation newloc;
+            newloc.pos.x = loc.pos.x;
+            newloc.pos.y = loc.pos.y;
+            newloc.ori = loc.ori;
+
+            newloc = translate(newloc, movelist[i]);
+            int mapval;
 
 
-        if(newloc.pos.x>=0 && newloc.pos.x<border[0] && newloc.pos.y>=0
-           && newloc.pos.y<border[1])
-        {
+            if (newloc.pos.x >= 0 && newloc.pos.x < border[0] && newloc.pos.y >= 0
+                && newloc.pos.y < border[1]) {
 
-            mapval = map.costs[newloc.pos.y][newloc.pos.x];
+                mapval = map.costs[newloc.pos.y][newloc.pos.x];
+
+            } else {
+                mapval = 20000;
+            }
+            t_node *newnode = createNode(mapval,nbsons);
+            newnode->move = movelist[i];
+            newnode->orientation = newloc.ori;
+            root.sons[i] = newnode;
+
+            int newusedmove[movelist_size];
+            for (int j = 0; j < movelist_size; ++j) {
+                newusedmove[j] = usedmove[j];
+            }
+            newusedmove[i]=1;
+            createPhase2(tries - 1, map, newloc, movelist, movelist_size, *newnode,newusedmove, border);
 
         }
-        else
-        {
-            mapval = 20000;
-
-        }
-        t_node *newnode = createNode(mapval,movelist_size);
-        newnode->move = movelist[i];
-        newnode->orientation = newloc.ori;
-        root.sons[i] = newnode;
-
-        if(root.value<10000)
-        {
-            createPhase(tries-1,map,newloc,movelist,movelist_size,*newnode,usedmove | (1 << i),border);
-        }
-
-
-
     }
 }
 
@@ -326,7 +341,7 @@ void printTree1(t_node *root, int depth) {
     // Recur for each child node
     for (int i = 0; i < root->nbSons; i++) {
         if (root->sons[i]) { // Only print non-NULL children
-            printTree(root->sons[i], depth + 1); // Recur with increased depth
+            printTree1(root->sons[i], depth + 1); // Recur with increased depth
         }
     }
 }

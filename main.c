@@ -61,4 +61,18 @@ int main() {
     }
 
     t_tree tree = createTree();
-    tree.root = createphase1(3,map,spawn,moves,num_moves,border,used
+    tree.root = createNode(map.costs[spawn.pos.y][spawn.pos.x],num_moves);
+    tree.root->orientation = spawn.ori;
+    createPhase2(3,map,spawn,moves,num_moves,*(tree.root),usedmoveindices,border);
+    printTree(tree.root,4);
+
+    return 0;
+}
+
+
+
+
+
+
+
+
