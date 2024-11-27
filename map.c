@@ -289,6 +289,9 @@ void displayMap(t_map map)
                     case CREVASSE:
                         sprintf(c, "%c%c%c",219,219,219);
                         break;
+                    case ROVER:
+                        sprintf(c, "RRR");
+                        break;
                     default:
                         strcpy(c, "???");
                         break;
@@ -300,4 +303,30 @@ void displayMap(t_map map)
 
     }
     return;
+}
+
+t_map copyMap(t_map original) {
+    t_map copy;
+    copy.x_max = original.x_max;
+    copy.y_max = original.y_max;
+
+    // Allocate memory for the soils
+    copy.soils = (t_soil **)malloc(copy.y_max * sizeof(t_soil *));
+    for (int i = 0; i < copy.y_max; i++) {
+        copy.soils[i] = (t_soil *)malloc(copy.x_max * sizeof(t_soil));
+        for (int j = 0; j < copy.x_max; j++) {
+            copy.soils[i][j] = original.soils[i][j];
+        }
+    }
+
+    // Allocate memory for the costs
+    copy.costs = (int **)malloc(copy.y_max * sizeof(int *));
+    for (int i = 0; i < copy.y_max; i++) {
+        copy.costs[i] = (int *)malloc(copy.x_max * sizeof(int));
+        for (int j = 0; j < copy.x_max; j++) {
+            copy.costs[i][j] = original.costs[i][j];
+        }
+    }
+
+    return copy;
 }
