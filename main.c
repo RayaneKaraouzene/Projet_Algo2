@@ -62,7 +62,7 @@ int main() {
     do
     {
 
-
+        srand(time(NULL));
         t_move* moves = random_moves(num_moves);
         for(int i = 0; i < num_moves; i++){
             t_move move = moves[i];

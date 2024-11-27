@@ -45,6 +45,7 @@ t_node* createphase4(t_map map,t_localisation loc,int depth,int maxdepth,t_move 
     int nbsons = 0;
 
     for (int i = 0; i < movescount; ++i) {
+
         if(usedmoves[i])
         {
             continue;
@@ -92,6 +93,7 @@ t_node* createphase4(t_map map,t_localisation loc,int depth,int maxdepth,t_move 
                 child->nbSons=subtree->nbSons;
             }
         }
+
 
         root->sons[nbsons++]=child;
 
