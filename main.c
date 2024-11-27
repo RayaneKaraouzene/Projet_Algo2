@@ -40,13 +40,7 @@ int main() {
     mapcopy = copyMap(map);
 
 
-    t_move* moves = random_moves(9);
-    for(int i = 0; i < 9; i++){
-        t_move move = moves[i];
-        printf("%s ", getMoveAsString(move));
-        printf("%d ", remainingMoveNumber(move));
-    }
-    printf("\n");
+
 
     t_localisation spawn = SPAWN(6,7);
 
@@ -64,6 +58,15 @@ int main() {
 
     do
     {
+        t_move* moves = random_moves(num_moves);
+        for(int i = 0; i < 9; i++){
+            t_move move = moves[i];
+            printf("%s ", getMoveAsString(move));
+            printf("%d ", remainingMoveNumber(move));
+        }
+        printf("\n");
+
+
         int usedmoveindices[num_moves];
         for(int i=0;i<num_moves;i++)
         {
@@ -113,16 +116,17 @@ int main() {
         if (result.minval == 0 || result.minval >= 10000)
         {
             running = 0;
+            printf("fini");
         }
 
         spawn.pos.x = old_x;
         spawn.pos.y = old_y;
         spawn.ori = old_ori;
+        printf("%d %d %s\n",spawn.pos.x,spawn.pos.y,getOriAsString(spawn.ori));
 
-        free(&tree);
-    }while(running);
+    }while(running !=0 );
 
-    printf("fini");
+    printf("hdjohbzmocgbzimpcbz");
 
 
 
