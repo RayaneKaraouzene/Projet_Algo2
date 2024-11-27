@@ -24,7 +24,6 @@ t_node* createphase1(int tries,t_map map,t_localisation loc,t_move movelist[],in
 void createPhase2(int tries,t_map map,t_localisation loc,t_move movelist[],int movelist_size,t_node root,int *usedmove,int border[]);
 t_node* createphase3(t_map map,t_localisation loc,int depth,int maxdepth,t_move *movelist,int movescount,int *usedmoves,int *border);
 t_node* createphase4(t_map map,t_localisation loc,int depth,int maxdepth,t_move *movelist,int movescount,int *usedmoves,int *border);
-void freetree(t_node* node);
 
 #endif //UNTITLED1_TREES_H
 
