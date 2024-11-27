@@ -84,7 +84,7 @@ int main() {
         createPhase2(3,map,spawn,moves,num_moves,*(tree.root),usedmoveindices,border);*/
 
         tree.root = createphase4(map,spawn,0,3,moves,num_moves,usedmoveindices,border);
-        printTree(tree.root,4);
+
 
         printf("done tree\n");
         t_move initialsequence[] = {};
@@ -127,7 +127,8 @@ int main() {
         spawn.pos.y = old_y;
         spawn.ori = old_ori;
         printf("%d %d %s\n",spawn.pos.x,spawn.pos.y,getOriAsString(spawn.ori));
-
+        freetree(tree.root);
+        free(&tree);
 
     }while(running !=0 );
 

@@ -148,4 +148,19 @@ void printTree(t_node *root, int depth) {
 }
 
 
+void freetree(t_node* node)
+{
+    if(node == NULL)
+    {
+        return;
+    }
+
+    for (int i = 0; i < node->nbSons; ++i) {
+        if(node->sons[i]==NULL)continue;
+        freetree(node->sons[i]);
+    }
+    free(node->sons);
+    free(node);
+}
+
 
