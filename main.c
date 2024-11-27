@@ -56,18 +56,16 @@ int main() {
 
     int running = 1;
 
-
     do
     {
-
-
         t_move* moves = random_moves(num_moves);
-        for(int i = 0; i < num_moves; i++){
+        for(int i = 0; i < 9; i++){
             t_move move = moves[i];
             printf("%s ", getMoveAsString(move));
             printf("%d ", remainingMoveNumber(move));
         }
         printf("\n");
+
 
         int usedmoveindices[num_moves];
         for(int i=0;i<num_moves;i++)
@@ -82,7 +80,7 @@ int main() {
         createPhase2(3,map,spawn,moves,num_moves,*(tree.root),usedmoveindices,border);*/
 
         tree.root = createphase4(map,spawn,0,3,moves,num_moves,usedmoveindices,border);
-
+        printTree(tree.root,4);
 
         printf("done tree\n");
         t_move initialsequence[] = {};
@@ -125,8 +123,6 @@ int main() {
         spawn.pos.y = old_y;
         spawn.ori = old_ori;
         printf("%d %d %s\n",spawn.pos.x,spawn.pos.y,getOriAsString(spawn.ori));
-        freetree(tree.root);
-
 
     }while(running !=0 );
 
@@ -139,7 +135,6 @@ int main() {
 
     return 0;
 }
-
 
 
 
