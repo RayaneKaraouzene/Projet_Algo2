@@ -3,6 +3,7 @@
 #include "loc.h"
 #include "trees.h"
 #include "moves.h"
+#include "path.h"
 int main() {
     t_map map;
 
@@ -51,11 +52,32 @@ int main() {
     int border[2];
     border[0] = 6;
     border[1] = 7;
+
+
+    int num_moves = 9;
+    int usedmoveindices[num_moves];
+    for(int i=0;i<num_moves;i++)
+    {
+        usedmoveindices[i]=0;
+    }
+
     t_tree tree = createTree();
-    int mapval = map.costs[spawn.pos.y][spawn.pos.x];
-    tree.root = createNode(mapval,4);
-    createPhase(4,map,spawn,moves,9,*(tree.root),0,border);
+    /*tree.root = createNode(map.costs[spawn.pos.y][spawn.pos.x],num_moves);
+    tree.root->orientation = spawn.ori;
+    createPhase2(3,map,spawn,moves,num_moves,*(tree.root),usedmoveindices,border);*/
+
+    tree.root = createphase4(map,spawn,0,5,moves,num_moves,usedmoveindices,border);
     printTree(tree.root,4);
+
+    printf("done tree\n");
+    t_move initialsequence[] = {};
+    t_path result = findbestpath(tree.root,0,initialsequence,0);
+
+    printf("Minimum value is: %d | Total cost is: %d | ",result.minval,result.totalcost);
+    printf("Move sequence is: ");
+    for (int i = 0; i < result.movecount-1; ++i) {
+        printf("%s ", getMoveAsString(result.movesequence[i]));
+    }
 
     return 0;
 }
