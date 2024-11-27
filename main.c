@@ -93,6 +93,7 @@ int main() {
         }
 
 
+
         int old_x =spawn.pos.x;
         int old_y =spawn.pos.y;
         int old_ori =spawn.ori;
