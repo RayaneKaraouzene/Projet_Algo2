@@ -55,14 +55,12 @@ int main() {
     int num_moves = 5;
 
     int running = 1;
-    spawn.pos.y = 1;
-    spawn.pos.x = 1;
-    spawn.ori = 'EAST';
+
 
     do
     {
 
-        srand(time(NULL));
+
         t_move* moves = random_moves(num_moves);
         for(int i = 0; i < num_moves; i++){
             t_move move = moves[i];
@@ -128,7 +126,7 @@ int main() {
         spawn.ori = old_ori;
         printf("%d %d %s\n",spawn.pos.x,spawn.pos.y,getOriAsString(spawn.ori));
         freetree(tree.root);
-        free(&tree);
+
 
     }while(running !=0 );
 
