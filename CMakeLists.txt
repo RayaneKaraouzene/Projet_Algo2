@@ -17,4 +17,5 @@ add_executable(project_executable main.c
         nodes.c
         nodes.h
         trees.h
-        trees.c)
+        trees.c
+)

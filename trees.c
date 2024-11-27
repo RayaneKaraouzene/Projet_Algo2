@@ -7,7 +7,7 @@
 #include "map.h"
 #include "moves.h"
 
-#define NUM_MOVES 4
+#define NUM_MOVES 3
 t_tree createTree()
 {
 
@@ -18,103 +18,6 @@ t_tree createTree()
 }
 
 
-t_localisation translatee(t_localisation loc, t_move move)
-{
-    /** rules for coordinates:
-     *  - x grows to the right with step of +1
-     *  - y grows to the bottom with step of +1
-     *  - the origin (x=0, y=0) is at the top left corner
-     */
-    t_position res = loc.pos;
-    int rst;
-    switch (move) {
-        case F_10:
-            switch (loc.ori) {
-                case NORTH:
-                    res.y = loc.pos.y - 1;
-                    break;
-                case EAST:
-                    res.x = loc.pos.x + 1;
-                    break;
-                case SOUTH:
-                    res.y = loc.pos.y + 1;
-                    break;
-                case WEST:
-                    res.x = loc.pos.x - 1;
-                    break;
-                default:
-                    break;
-            }
-            break;
-        case F_20:
-            switch (loc.ori) {
-                case NORTH:
-                    res.y = loc.pos.y - 2;
-                    break;
-                case EAST:
-                    res.x = loc.pos.x + 2;
-                    break;
-                case SOUTH:
-                    res.y = loc.pos.y + 2;
-                    break;
-                case WEST:
-                    res.x = loc.pos.x - 2;
-                    break;
-                default:
-                    break;
-            }
-            break;
-        case F_30:
-            switch (loc.ori) {
-                case NORTH:
-                    res.y = loc.pos.y - 3;
-                    break;
-                case EAST:
-                    res.x = loc.pos.x + 3;
-                    break;
-                case SOUTH:
-                    res.y = loc.pos.y + 3;
-                    break;
-                case WEST:
-                    res.x = loc.pos.x - 3;
-                    break;
-                default:
-                    break;
-            }
-            break;
-        case B_10:
-            switch (loc.ori) {
-                case NORTH:
-                    res.y = loc.pos.y + 1;
-                    break;
-                case EAST:
-                    res.x = loc.pos.x - 1;
-                    break;
-                case SOUTH:
-                    res.y = loc.pos.y - 1;
-                    break;
-                case WEST:
-                    res.x = loc.pos.x + 1;
-                    break;
-                default:
-                    break;
-            }
-            break;
-        case T_LEFT:
-            loc.ori=(loc.ori+3)%4;
-            break;
-        case T_RIGHT:
-            loc.ori=(loc.ori+1)%4;
-            break;
-        case U_TURN:
-            loc.ori=(loc.ori+2)%4;
-            break;
-        default:
-            break;
-    }
-    return loc_init(res.x, res.y, loc.ori);
-
-}
 
 
 /*t_tree createPhasee(t_localisation spawncoords,t_map map,t_move movelist[],int movelist_size)
@@ -175,20 +78,17 @@ void createPhase(int tries,t_map map,t_localisation loc,t_move movelist[],int mo
         newloc.pos.y = loc.pos.y;
         newloc.ori = loc.ori;
 
-        newloc = translate(newloc,movelist[i]);
+
+        newloc = translate(newloc,movelist[i],map);
         int mapval;
         if(newloc.pos.x>=0 && newloc.pos.x<border[0] && newloc.pos.y>=0
         && newloc.pos.y<border[1])
         {
-
              mapval = map.costs[newloc.pos.y][newloc.pos.x];
-
         }
         else
         {
              mapval = 20000;
-
-
         }
         t_node *newnode = createNode(mapval,movelist_size);
         newnode->move = movelist[i];
