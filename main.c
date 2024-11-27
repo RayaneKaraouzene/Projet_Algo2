@@ -53,7 +53,7 @@ int main() {
     border[1] = 7;
 
 
-    int num_moves = 4;
+    int num_moves = 5;
     int usedmoveindices[num_moves];
     for(int i=0;i<num_moves;i++)
     {
@@ -61,9 +61,11 @@ int main() {
     }
 
     t_tree tree = createTree();
-    tree.root = createNode(map.costs[spawn.pos.y][spawn.pos.x],num_moves);
+    /*tree.root = createNode(map.costs[spawn.pos.y][spawn.pos.x],num_moves);
     tree.root->orientation = spawn.ori;
-    createPhase2(3,map,spawn,moves,num_moves,*(tree.root),usedmoveindices,border);
+    createPhase2(3,map,spawn,moves,num_moves,*(tree.root),usedmoveindices,border);*/
+
+    tree.root = createphase4(map,spawn,0,3,moves,num_moves,usedmoveindices,border);
     printTree(tree.root,4);
 
     return 0;
