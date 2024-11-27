@@ -3,7 +3,6 @@
 //
 
 #include "moves.h"
-
 /* prototypes of local functions */
 /* local functions are used only in this file, as helper functions */
 
@@ -15,13 +14,7 @@
  */
 t_orientation rotate(t_orientation, t_move );
 
-/**
- * @brief function to translate the robot according to a move and its actual position
- * @param loc : the actual localisation of the robot
- * @param move : the move to do
- * @return the new localisation of the robot
- */
-t_localisation translate(t_localisation , t_move);
+
 
 /* definition of local functions */
 
@@ -45,7 +38,7 @@ t_orientation rotate(t_orientation ori, t_move move)
     return (ori+rst)%4;
 }
 
-t_localisation translate(t_localisation loc, t_move move)
+t_localisation translate(t_localisation loc, t_move move,t_map map)
 {
     /** rules for coordinates:
      *  - x grows to the right with step of +1
@@ -54,94 +47,189 @@ t_localisation translate(t_localisation loc, t_move move)
      */
     t_position res = loc.pos;
     int rst;
-    switch (move) {
-        case F_10:
-            switch (loc.ori) {
-                case NORTH:
-                    res.y = loc.pos.y - 1;
+    switch (map.soils[loc.pos.y][loc.pos.x]) {
+        case ERG:
+            switch (move)
+            {
+                case F_10:
+                    switch (loc.ori) {
+                        case NORTH:
+                            res.y = loc.pos.y ;
+                                break;
+                        case EAST:
+                            res.x = loc.pos.x ;
+                                break;
+                        case SOUTH:
+                            res.y = loc.pos.y ;
+                                break;
+                        case WEST:
+                            res.x = loc.pos.x ;
+                                break;
+                        default:
+                            break;
+                    }
                     break;
-                case EAST:
-                    res.x = loc.pos.x + 1;
+                case F_20:
+                    switch (loc.ori) {
+                        case NORTH:
+                            res.y = loc.pos.y - 1;
+                                break;
+                        case EAST:
+                            res.x = loc.pos.x + 1;
+                                break;
+                        case SOUTH:
+                            res.y = loc.pos.y + 1;
+                                break;
+                        case WEST:
+                            res.x = loc.pos.x - 1;
+                                break;
+                        default:
+                            break;
+                    }
                     break;
-                case SOUTH:
-                    res.y = loc.pos.y + 1;
-                    break;
-                case WEST:
-                    res.x = loc.pos.x - 1;
-                    break;
+                case F_30:
+                    switch (loc.ori) {
+                        case NORTH:
+                            res.y = loc.pos.y - 2;
+                                break;
+                        case EAST:
+                            res.x = loc.pos.x + 2;
+                                break;
+                        case SOUTH:
+                            res.y = loc.pos.y +2;
+                                break;
+                        case WEST:
+                            res.x = loc.pos.x - 2;
+                                break;
+                        default:
+                            break;
+                    }
+                        break;
+                case B_10:
+                    switch (loc.ori) {
+                        case NORTH:
+                            res.y = loc.pos.y ;
+                                break;
+                        case EAST:
+                            res.x = loc.pos.x ;
+                                break;
+                        case SOUTH:
+                            res.y = loc.pos.y ;
+                                break;
+                        case WEST:
+                            res.x = loc.pos.x ;
+                                break;
+                        default:
+                            break;
+                    }
+                        break;
+                case T_LEFT:
+                    loc.ori=loc.ori;
+                        break;
+                case T_RIGHT:
+                    loc.ori=loc.ori;
+                        break;
+                case U_TURN:
+                    loc.ori=(loc.ori+1)%4;
+                        break;
                 default:
                     break;
             }
             break;
-        case F_20:
-            switch (loc.ori) {
-                case NORTH:
-                    res.y = loc.pos.y - 2;
-                    break;
-                case EAST:
-                    res.x = loc.pos.x + 2;
-                    break;
-                case SOUTH:
-                    res.y = loc.pos.y + 2;
-                    break;
-                case WEST:
-                    res.x = loc.pos.x - 2;
-                    break;
-                default:
-                    break;
-            }
-            break;
-        case F_30:
-            switch (loc.ori) {
-                case NORTH:
-                    res.y = loc.pos.y - 3;
-                    break;
-                case EAST:
-                    res.x = loc.pos.x + 3;
-                    break;
-                case SOUTH:
-                    res.y = loc.pos.y + 3;
-                    break;
-                case WEST:
-                    res.x = loc.pos.x - 3;
-                    break;
-                default:
-                    break;
-            }
-            break;
-        case B_10:
-            switch (loc.ori) {
-                case NORTH:
-                    res.y = loc.pos.y + 1;
-                    break;
-                case EAST:
-                    res.x = loc.pos.x - 1;
-                    break;
-                case SOUTH:
-                    res.y = loc.pos.y - 1;
-                    break;
-                case WEST:
-                    res.x = loc.pos.x + 1;
-                    break;
-                default:
-                    break;
-            }
-            break;
-        case T_LEFT:
-            loc.ori=(loc.ori+3)%4;
-            break;
-        case T_RIGHT:
-            loc.ori=(loc.ori+1)%4;
-            break;
-        case U_TURN:
-            loc.ori=(loc.ori+2)%4;
-            break;
+
         default:
-            break;
+            switch (move)
+            {
+                case F_10:
+                    switch (loc.ori) {
+                        case NORTH:
+                            res.y = loc.pos.y - 1;
+                                break;
+                        case EAST:
+                            res.x = loc.pos.x + 1;
+                                break;
+                        case SOUTH:
+                            res.y = loc.pos.y + 1;
+                                break;
+                        case WEST:
+                            res.x = loc.pos.x - 1;
+                                break;
+                        default:
+                            break;
+                    }
+                    break;
+                case F_20:
+                    switch (loc.ori) {
+                        case NORTH:
+                            res.y = loc.pos.y - 2;
+                                break;
+                        case EAST:
+                            res.x = loc.pos.x + 2;
+                                break;
+                        case SOUTH:
+                            res.y = loc.pos.y + 2;
+                                break;
+                        case WEST:
+                            res.x = loc.pos.x - 2;
+                                break;
+                        default:
+                            break;
+                            }
+                    break;
+                case F_30:
+                    switch (loc.ori) {
+                        case NORTH:
+                            res.y = loc.pos.y - 3;
+                                break;
+                        case EAST:
+                            res.x = loc.pos.x + 3;
+                                break;
+                        case SOUTH:
+                            res.y = loc.pos.y + 3;
+                                break;
+                        case WEST:
+                            res.x = loc.pos.x - 3;
+                                break;
+                        default:
+                            break;
+                            }
+                    break;
+                case B_10:
+                    switch (loc.ori) {
+                        case NORTH:
+                            res.y = loc.pos.y + 1;
+                            break;
+                        case EAST:
+                            res.x = loc.pos.x - 1;
+                            break;
+                        case SOUTH:
+                            res.y = loc.pos.y - 1;
+                            break;
+                        case WEST:
+                            res.x = loc.pos.x + 1;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case T_LEFT:
+                    loc.ori=(loc.ori+3)%4;
+                        break;
+                case T_RIGHT:
+                    loc.ori=(loc.ori+1)%4;
+                        break;
+                case U_TURN:
+                    loc.ori=(loc.ori+2)%4;
+                        break;
+                default:
+                    break;
+                    }
+        break;
     }
         return loc_init(res.x, res.y, loc.ori);
 
 }
+
 
 /* definitions of exported functions */
 
@@ -151,17 +239,17 @@ char *getMoveAsString(int move)
     return _moves[move];
 }
 
-t_localisation move(t_localisation loc, t_move move)
+t_localisation move(t_localisation loc, t_move move,t_map map)
 {
     t_localisation new_loc;
     new_loc.ori = rotate(loc.ori, move);
-    new_loc = translate(loc, move);
+    new_loc = translate(loc, move, map);
     return new_loc;
 }
 
-void updateLocalisation(t_localisation *p_loc, t_move m)
+void updateLocalisation(t_localisation *p_loc, t_move m,t_map map)
 {
-    *p_loc = move(*p_loc, m);
+    *p_loc = move(*p_loc, m, map);
     return;
 }
 
