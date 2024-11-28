@@ -117,92 +117,72 @@ t_localisation translatee(t_localisation loc, t_move move)
 }
 
 
-/*t_tree createPhasee(t_localisation spawncoords,t_map map,t_move movelist[],int movelist_size)
+
+
+
+t_node* createphase4(t_map map,t_localisation loc,int depth,int maxdepth,t_move *movelist,int movescount,int *usedmoves,int *border)
 {
-    int spawn_x = spawncoords.x;
-    int spawn_y = spawncoords.y;
+    if(depth==maxdepth) return NULL;
 
 
-    t_localisation current_loc;
-    current_loc.pos.x = spawn_x;
-    current_loc.pos.y = spawn_y;
-    current_loc.ori = spawncoords.ori;
+    t_node *root = createNode(map.costs[loc.pos.y][loc.pos.x],movescount-depth);
 
-
-    t_tree phase = createTree();
-
-    int spawnval = map.costs[spawn_y][spawn_x];
-
-    phase.root = createNode(spawnval,movelist_size,phase.root);
-
-    t_node *currentnode = phase.root;
-    t_node *mothernode = phase.root;
-    for (int i = 0; i < movelist_size; ++i) {
-        mothernode = mothernode->sons[i];
-        for (int j = 0; j < movelist_size; ++j) {
-
-
-            for(int k=0;k<movelist_size;k++)
-            {
-                currentnode = mothernode->sons[k];
-
-                current_loc = translate(current_loc,movelist[k]);
-                int mapval = map.costs[current_loc.pos.y][current_loc.pos.x];
-                currentnode = createNode(mapval,movelist_size,mothernode);
-                currentnode->move = movelist[k];
-
-            }
-            mothernode = currentnode->parent->sons[j];
-        }
-        movelist_size--;
-
+    if(root->value>=10000)
+    {
+        root->nbSons = 0;
+        return root;
     }
 
+    int nbsons = 0;
 
-
-}*/
-
-void createPhase(int tries,t_map map,t_localisation loc,t_move movelist[],int movelist_size,t_node root,int usedmove,int border[])
-{
-    if (tries == 0) return;
-
-    for (int i = 0; i < NUM_MOVES; ++i) {
-        if((usedmove >>i)&1) continue;
-        if (root.value>10000) return;
-        if (root.value==0)return;
+    for (int i = 0; i < movescount; ++i) {
+        if(usedmoves[i])
+        {
+            continue;
+        }
         t_localisation newloc;
         newloc.pos.x = loc.pos.x;
         newloc.pos.y = loc.pos.y;
         newloc.ori = loc.ori;
+        newloc = translate(newloc,movelist[i],map);
 
-        newloc = translate(newloc,movelist[i]);
-        int mapval;
-        if(newloc.pos.x>=0 && newloc.pos.x<border[0] && newloc.pos.y>=0
-        && newloc.pos.y<border[1])
+        int childvalue;
+        if (newloc.pos.x < 0 || newloc.pos.x >= border[0] || newloc.pos.y < 0
+            || newloc.pos.y >= border[1])
         {
-
-             mapval = map.costs[newloc.pos.y][newloc.pos.x];
-
+            childvalue = 20000;
         }
-        else
-        {
-             mapval = 20000;
+        else childvalue = map.costs[newloc.pos.y][newloc.pos.x];
 
 
+        int newusedmoves[movescount];
+        for (int j = 0; j < movescount; ++j) {
+            newusedmoves[j]=usedmoves[j];
         }
-        t_node *newnode = createNode(mapval,movelist_size);
-        newnode->move = movelist[i];
-        newnode->orientation = newloc.ori;
-        root.sons[i] = newnode;
+        newusedmoves[i]=1;
 
-        if(root.value<10000)
-        {
-            createPhase(tries-1,map,newloc,movelist,movelist_size-1,*newnode,usedmove | (1 << i),border);
+        t_node *child = createNode(childvalue,movescount-depth-1);
+        child->move = movelist[i];
+        child->orientation = newloc.ori;
+
+        if(child->value>=10000)child->nbSons = 0;
+        else{
+            child->sons = (t_node**)malloc((movescount-depth-1) * sizeof(t_node*));
+            t_node* subtree = createphase4(map,newloc,depth+1,maxdepth,movelist,movescount,newusedmoves,border);
+            if(subtree)
+            {
+                for (int j = 0; j < subtree->nbSons; ++j) {
+                    child->sons[j]= subtree->sons[j];
+                }
+                child->nbSons=subtree->nbSons;
+            }
         }
 
-
+        root->sons[nbsons++]=child;
 
     }
+    root->nbSons = nbsons;
+    return root;
 }
 
 void printTree1(t_node *root, int depth) {
@@ -222,7 +202,7 @@ void printTree1(t_node *root, int depth) {
     // Recur for each child node
     for (int i = 0; i < root->nbSons; i++) {
         if (root->sons[i]) { // Only print non-NULL children
-            printTree(root->sons[i], depth + 1); // Recur with increased depth
+            printTree1(root->sons[i], depth + 1); // Recur with increased depth
         }
     }
 }
@@ -241,12 +221,14 @@ void printTree(t_node *root, int depth) {
     }
 
     // Afficher le contenu du nœud
-    printf("Node Value: %d | Move used: %s | orientation: %s\n", root->value, getMoveAsString(root->move),
-           getOriAsString(root->orientation));
+    printf("Node Value: %d | Move used: %s | orientation: %s | nbsons:%d\n", root->value, getMoveAsString(root->move),
+           getOriAsString(root->orientation),root->nbSons);
 
     // Appel récursif pour chaque fils
     for (int i = 0; i < root->nbSons; i++) {
         printTree(root->sons[i], depth + 1);
     }
 }
+
+
 

@@ -7,6 +7,8 @@
 
 #include "loc.h"
 #include "time.h"
+#include "map.h"
+
 /**
  * @brief Array of strings for the possible moves of the robot
  */
@@ -41,7 +43,7 @@ char *getMoveAsString(int move);
  * @param move : the move to do
  * @return the new localisation of the robot
  */
-t_localisation move(t_localisation, t_move);
+t_localisation move(t_localisation, t_move, t_map);
 
 /**
  * @brief wrapper function to update a single location
@@ -49,9 +51,18 @@ t_localisation move(t_localisation, t_move);
  * @param move : the move to do
  * @return none
  */
-void updateLocalisation(t_localisation *, t_move);
+void updateLocalisation(t_localisation *, t_move, t_map);
+/**
+ * @brief function to translate the robot according to a move and its actual position
+ * @param loc : the actual localisation of the robot
+ * @param move : the move to do
+ * @return the new localisation of the robot
+ */
+t_localisation translate(t_localisation , t_move, t_map);
 int remainingMoveNumber(t_move);
 void decrementMoveNumber(t_move);
 t_move intToMove(int);
 t_move* random_moves(int n);
+
+
 #endif //UNTITLED1_MOVES_H

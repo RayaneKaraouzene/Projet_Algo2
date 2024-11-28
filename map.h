@@ -6,6 +6,7 @@
 #define UNTITLED1_MAP_H
 
 #define COST_UNDEF 65535
+
 /**
  * @brief Enum for the possible soils of the map
  */
@@ -15,7 +16,8 @@ typedef enum e_soil
     PLAIN,
     ERG,
     REG,
-    CREVASSE
+    CREVASSE,
+    ROVER
 } t_soil;
 
 /**
@@ -54,5 +56,7 @@ t_map createMapFromFile(char *);
  * @param map : the map to display
  */
 void displayMap(t_map);
+
+t_map copyMap(t_map original);
 
 #endif //UNTITLED1_MAP_H
