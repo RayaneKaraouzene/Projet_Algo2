@@ -80,7 +80,7 @@ int main() {
         createPhase2(3,map,spawn,moves,num_moves,*(tree.root),usedmoveindices,border);*/
 
         tree.root = createphase4(map,spawn,0,3,moves,num_moves,usedmoveindices,border);
-        printTree(tree.root,4);
+        //aprintTree(tree.root,4);
 
         printf("done tree\n");
         t_move initialsequence[] = {};
@@ -126,7 +126,7 @@ int main() {
 
     }while(running !=0 );
 
-    printf("hdjohbzmocgbzimpcbz");
+    printf("Programme terminé");
 
 
 
@@ -135,7 +135,6 @@ int main() {
 
     return 0;
 }
-
 
 
 

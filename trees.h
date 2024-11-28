@@ -18,11 +18,25 @@ typedef struct tree
 }t_tree;
 
 t_tree createTree();
-void createPhase(int tries,t_map map,t_localisation loc,t_move movelist[],int movelist_size,t_node root,int usedmove,int border[]);
+
+
+/**
+* @brief Prints the tree
+*/
 void printTree(t_node *root, int depth);
-t_node* createphase1(int tries,t_map map,t_localisation loc,t_move movelist[],int movelist_size,int border[],int *usedmoveindices);
-void createPhase2(int tries,t_map map,t_localisation loc,t_move movelist[],int movelist_size,t_node root,int *usedmove,int border[]);
-t_node* createphase3(t_map map,t_localisation loc,int depth,int maxdepth,t_move *movelist,int movescount,int *usedmoves,int *border);
+
+/**
+* @brief Function to create the phase known as the tree of all possibilities of moves
+* @param map : the map
+* @param loc : the location of the rover, the spawn point at the start
+* @param depth : the starting depth, initiated at 0
+ * @param maxdepth : the max depth, also said to be the number of moves that are going to be chosen
+ * @param movelist : the list of the moves
+ * @param movescount : the size of movelist
+ * @param usedmoves : an array used to determine which move has been used
+ * @param border : an array containing map borders x,y
+* @return the root
+*/
 t_node* createphase4(t_map map,t_localisation loc,int depth,int maxdepth,t_move *movelist,int movescount,int *usedmoves,int *border);
 
 #endif //UNTITLED1_TREES_H
